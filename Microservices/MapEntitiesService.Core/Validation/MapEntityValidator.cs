@@ -1,5 +1,6 @@
 ﻿using MapEntitiesService.Core.Model;
 using MapEntitiesService.Core.Validation.Interfaces;
+using MapEntitiesService.Core.Validation.Validator.Interfaces;
 
 namespace MapEntitiesService.Core.Validation;
 
@@ -13,11 +14,14 @@ public class MapEntityValidator : IMapEntityValidator
         _mapEntityTitleValidator = mapEntityTitleValidator;
         _coordinateValidator = coordinateValidator;
     }
-    public ResultModel ValidateMapEntity(MapEntityDto mapEntityDto)
+    public ResultModel Validate(MapEntityDto mapEntityDto)
     {
-      _mapEntityTitleValidator.ValidateMapEntityTitle(mapEntityDto);
-       _coordinateValidator.ValidateCoordinate(mapEntityDto);
-       
+        var result = _mapEntityTitleValidator.Validate(mapEntityDto);
+        if (result.Success is false) return new ResultModel(Success: false);
+
+        result = _coordinateValidator.Validate(mapEntityDto);
+        if (result.Success is false) return new ResultModel(Success: false);
+
         return new ResultModel(Success: true);
     }
 }

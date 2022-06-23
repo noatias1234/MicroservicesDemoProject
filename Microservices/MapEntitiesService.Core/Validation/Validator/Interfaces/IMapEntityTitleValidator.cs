@@ -4,6 +4,5 @@ namespace MapEntitiesService.Core.Validation.Interfaces;
 
 public interface IMapEntityTitleValidator
 {
-    ResultModel ValidateMapEntityTitle(MapEntityDto mapEntityDto );
+    ResultModel Validate(MapEntityDto mapEntityDto );
 }
-

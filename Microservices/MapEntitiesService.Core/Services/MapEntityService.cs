@@ -20,15 +20,17 @@ public class MapEntityService : IMapEntityService
         _publisher = publisher;
         _mapEntityValidator = mapEntityValidator;
     }
-
     public ResultModel HandleNewMapEntity(MapEntityDto mapEntityDto)
     {
         _logger.LogInformation("New map entity: Title  - {entityTitle}", mapEntityDto.Title);
 
-       _mapEntityValidator.ValidateMapEntity(mapEntityDto);
-        
-        _publisher.Publish("MapEntityTopic", mapEntityDto);
+        var validationResult = _mapEntityValidator.Validate(mapEntityDto);
 
-        return new ResultModel(Success: true);
+        if (validationResult.Success is true)
+        {
+            _publisher.Publish("MapEntityTopic", mapEntityDto);
+            return new ResultModel(Success: true);
+        }
+        else return new ResultModel(Success: false);
     }
 }
