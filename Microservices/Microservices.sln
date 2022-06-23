@@ -5,13 +5,18 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapEntitiesService", "MapEntitiesService\MapEntitiesService.csproj", "{5B649B21-5BFD-4AF5-B8C5-45FD9187DEA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEntitiesService.Core", "MapEntitiesService.Core\MapEntitiesService.Core.csproj", "{A5F70B3F-6ACA-4640-AF34-4CE144D418C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapEntitiesService.Core", "MapEntitiesService.Core\MapEntitiesService.Core.csproj", "{A5F70B3F-6ACA-4640-AF34-4CE144D418C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEntitiesService.Infrastructure", "MapEntitiesService.Infrastructure\MapEntitiesService.Infrastructure.csproj", "{8B95F079-2062-4481-A473-0EB5B6FE59B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapEntitiesService.Infrastructure", "MapEntitiesService.Infrastructure\MapEntitiesService.Infrastructure.csproj", "{8B95F079-2062-4481-A473-0EB5B6FE59B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{83E45470-FAC7-4F5A-8F51-6F05433F5F94}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MapEntitiesService", "MapEntitiesService", "{CB5B490A-C63A-475D-8B5A-23DBA605B9BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9BA13B69-8B7C-4956-9B01-BEA34C5FC06B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
