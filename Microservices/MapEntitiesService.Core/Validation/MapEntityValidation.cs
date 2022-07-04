@@ -4,12 +4,12 @@ using MapEntitiesService.Core.Validation.Validator.Interfaces;
 
 namespace MapEntitiesService.Core.Validation;
 
-public class MapEntityValidator : IMapEntityValidator
+public class MapEntityValidation : IMapEntityValidator
 {
     private readonly IMapEntityTitleValidator _mapEntityTitleValidator;
     private readonly ICoordinateValidator _coordinateValidator;
 
-    public MapEntityValidator(IMapEntityTitleValidator mapEntityTitleValidator, ICoordinateValidator coordinateValidator)
+    public MapEntityValidation(IMapEntityTitleValidator mapEntityTitleValidator, ICoordinateValidator coordinateValidator)
     {
         _mapEntityTitleValidator = mapEntityTitleValidator;
         _coordinateValidator = coordinateValidator;

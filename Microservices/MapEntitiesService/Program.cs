@@ -1,9 +1,11 @@
-using MapEntitiesService.Infrastructure;
+using MapEntitiesService.Core.Configuration;
+using MapEntitiesService.Infrastructure.IocContainer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMapEntityServices();
+var settings = builder.Configuration.GetSection(("MessageBrokerSettings")).Get<Settings>();
+builder.Services.AddMapEntityServices(settings);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MapEntitiesService.Core\MapEntitiesService.Core.csproj" />
+    <ProjectReference Include="..\MessageBroker.Infrastructure\MessageBroker.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
