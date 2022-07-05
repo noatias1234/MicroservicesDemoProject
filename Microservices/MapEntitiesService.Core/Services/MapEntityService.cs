@@ -36,8 +36,10 @@ public class MapEntityService : IMapEntityService
             return new ResultModel(Success: false);
         }
 
-        var messageJson = JsonSerializer.Serialize(mapEntityDto);
-        _publisher.Publish(_settings.MapEntityTopic, messageJson);
+        var messageJson = JsonSerializer.Serialize(mapEntityDto); // Convert to Json
+        // var fromJson = JsonSerializer.Deserialize<MapEntityDto>(messageJson); Convert from json
+       
+        _publisher.Publish(_settings.MapEntityTopic, messageJson);  
         
         return new ResultModel(Success: true);
     }

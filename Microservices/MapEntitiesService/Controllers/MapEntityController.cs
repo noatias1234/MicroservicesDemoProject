@@ -16,5 +16,5 @@ public partial class MapEntityController : ControllerBase
     }
 
     [HttpPost]
-    public ResultModel Post([FromBody] MapEntityDto mapEntityDto) => _mapEntityService.HandleNewMapEntity(mapEntityDto);
+    public ResultModel Post([FromForm] MapEntityDto mapEntityDto) => _mapEntityService.HandleNewMapEntity(mapEntityDto);
 }

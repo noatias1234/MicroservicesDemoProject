@@ -19,7 +19,7 @@ internal class SubscriberRabbitMq : ISubscriber, IDisposable
         _channel.Dispose();
     }
 
-    public void ReceiveMessage(string? topic, Action<string>? callbackFunction)
+    public void Subscribe(string? topic, Action<string>? callbackFunction)
     {
         _channel.ExchangeDeclare(exchange: topic, type: ExchangeType.Fanout);
 

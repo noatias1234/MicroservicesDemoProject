@@ -1,5 +1,7 @@
 using MessageBroker.Core.Interfaces;
 using Microsoft.AspNetCore.SignalR;
+using NotificationsService.Commands.Interfaces;
+using NotificationsService.Configurations;
 using NotificationsService.Hubs;
 
 namespace NotificationsService;
@@ -8,17 +10,27 @@ public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private readonly ISubscriber _subscriber;
-    private readonly IHubContext<NotificationsHub> _hubContext;
+    private readonly INewMapEntityCommand _newMapEntityCommand;
+    private readonly Settings _settings;
 
     public Worker(ILogger<Worker> logger, ISubscriber subscriber, 
-        IHubContext<NotificationsHub> hubContext)
+        INewMapEntityCommand newMapEntityCommand, Settings settings)
     {
         _logger = logger;
         _subscriber = subscriber;
-        _hubContext = hubContext;
+        _newMapEntityCommand = newMapEntityCommand;
+        _settings = settings;
     }
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await _hubContext.Clients.All.SendAsync("message", stoppingToken);
+        var topic = _settings.MapEntityTopic;
+       
+        if (string.IsNullOrEmpty(topic))
+        {
+            _logger.LogWarning("Topic: {Topic} was not found", topic);
+        }
+        else _subscriber.Subscribe(topic, _newMapEntityCommand.NotifyClientsNewMapEntity);
+        
+        return Task.CompletedTask;
     }
 }
