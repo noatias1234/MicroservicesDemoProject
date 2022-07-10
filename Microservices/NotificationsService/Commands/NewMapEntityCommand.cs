@@ -31,6 +31,6 @@ public class NewMapEntityCommand : INewMapEntityCommand
             return;
         }
 
-        _hubContext.Clients.All.SendAsync( message);
+        _hubContext.Clients.All.SendAsync(clientMethod, message);
     }
 }

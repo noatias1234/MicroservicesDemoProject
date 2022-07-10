@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+  messageBrokerService:
+    image: rabbitmq:3-management
+    container_name: "RabbitMqMessageBroker"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - main
+
+  mapentitiesservice:
+    image: ${DOCKER_REGISTRY-}mapentitiesservice
+    build:
+      context: .
+      dockerfile: MapEntitiesService/Dockerfile
+    container_name: "MapEntitiesService"
+    ports:
+      - 50001:80
+    depends_on:
+      - messageBrokerService
+    networks:
+      - main
+
+  notificationsservice:
+    image: ${DOCKER_REGISTRY-}notificationsservice
+    build:
+      context: .
+      dockerfile: NotificationsService/Dockerfile
+    container_name: "NotificationsService"
+    ports:
+      - 50003:80
+    depends_on:
+      - messageBrokerService
+    networks:
+      - main
+
+  seqLoggerService:
+    image: datalust/seq:latest
+    container_name: "SeqLogger"
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 50002:80
+      - 5341:5341
+    volumes:
+      - c:\Docker\Data\Seq:/data 
+    networks:
+      - main   
+    
+networks:
+  main:
+    name: entities-networks

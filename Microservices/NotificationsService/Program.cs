@@ -6,8 +6,11 @@ using NotificationsService.Commands;
 using NotificationsService.Commands.Interfaces;
 using NotificationsService.Configurations;
 using NotificationsService.Hubs;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
 
 var settings = builder.Configuration.GetSection(nameof(Settings)).Get<Settings>();
 

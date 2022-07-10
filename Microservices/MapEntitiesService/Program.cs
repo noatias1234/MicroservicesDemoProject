@@ -1,5 +1,6 @@
 using MapEntitiesService.Core.Configuration;
 using MapEntitiesService.Infrastructure.IocContainer;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 

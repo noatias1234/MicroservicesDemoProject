@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using MessageBroker.Core.Interfaces;
+using MessageBroker.Core.Model;
 using MessageBroker.Infrastructure.RabbitMQ.RabbitMqConnectionCreator.Interfaces;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -35,7 +36,7 @@ internal class SubscriberRabbitMq : ISubscriber, IDisposable
         consumer.Received += (_, ea) =>
         {
             var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
+            var message = Encoding.UTF8.GetString(body); 
             callbackFunction?.Invoke(message);
         };
 

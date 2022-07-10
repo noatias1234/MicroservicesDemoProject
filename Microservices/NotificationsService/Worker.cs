@@ -1,8 +1,6 @@
 using MessageBroker.Core.Interfaces;
-using Microsoft.AspNetCore.SignalR;
 using NotificationsService.Commands.Interfaces;
 using NotificationsService.Configurations;
-using NotificationsService.Hubs;
 
 namespace NotificationsService;
 
@@ -24,7 +22,7 @@ public class Worker : BackgroundService
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var topic = _settings.MapEntityTopic;
-       
+
         if (string.IsNullOrEmpty(topic))
         {
             _logger.LogWarning("Topic: {Topic} was not found", topic);

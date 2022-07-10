@@ -1,0 +1,17 @@
+﻿<Window x:Class="MapPresenterApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapPresenterApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox TextWrapping="Wrap" Text="TextBlock" Name="Title" Margin="53,38,653,327"/>
+        <TextBox TextWrapping="Wrap" Text="TextBlock" Name="X" Margin="53,139,653,222"/>
+        <TextBox TextWrapping="Wrap" Text="TextBlock" Name="Y" Margin="53,251,653,115"/>
+
+        <ItemsControl ItemsSource="{Binding Path=.}">
+        </ItemsControl>
+    </Grid>
+</Window>
