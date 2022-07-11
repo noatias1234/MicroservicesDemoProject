@@ -20,14 +20,19 @@ namespace MapPresenterApp
             _signalRService = signalRService;
             _logger = logger;
             _settings = settings;
-            
+         
+            _logger.LogInformation("App presenter: MainWindow:c'tor, {num}, {flag}", 20, true);
+
             ConfigureSignalR();
         }
 
         private async void ConfigureSignalR()
         {
+            _logger.LogInformation("App presenter: MainWindow:ConfigureSignalR, {num}, {flag}", 20, true);
+
             _signalRService.GetNewMapPoint(NewMapEntityCommand);
             await _signalRService.StartAsync();
+
         }
 
         private void NewMapEntityCommand(string newMapEntity)

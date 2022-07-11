@@ -27,7 +27,7 @@ public class MapEntityService : IMapEntityService
     }
     public ResultModel HandleNewMapEntity(MapEntityDto mapEntityDto)
     {
-        _logger.LogInformation("New map entity: Title  - {entityTitle}", mapEntityDto.Title);
+        _logger.LogInformation("New map entity: mapEntityDto - {mapEntityDto}", mapEntityDto);
 
         var validationResult = _mapEntityValidator.Validate(mapEntityDto);
 

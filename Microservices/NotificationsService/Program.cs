@@ -10,7 +10,6 @@ using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog();
 
 var settings = builder.Configuration.GetSection(nameof(Settings)).Get<Settings>();
 
@@ -27,11 +26,27 @@ builder.Services.AddHostedService<Worker>();
 
 builder.Services.AddSignalR();
 
+#region Serilog
+
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
+#endregion
+
 var app = builder.Build();
+
+#region SignalR
 
 app.MapHub<NotificationsHub>("/ws", options =>
 {
     options.Transports = HttpTransportType.WebSockets;
 });
+
+#endregion
+
 
 app.Run();

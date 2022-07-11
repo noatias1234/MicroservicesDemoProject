@@ -45,7 +45,7 @@ services:
       - 50002:80
       - 5341:5341
     volumes:
-      - c:\Docker\Data\Seq:/data 
+      - C:\Docker\Data\Seq:/data 
     networks:
       - main   
     

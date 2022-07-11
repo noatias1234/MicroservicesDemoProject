@@ -31,6 +31,8 @@ public class NewMapEntityCommand : INewMapEntityCommand
             return;
         }
 
+        _logger.LogWarning("ClientMethod: {ClientMethod} was found", clientMethod);
+
         _hubContext.Clients.All.SendAsync(clientMethod, message);
     }
 }

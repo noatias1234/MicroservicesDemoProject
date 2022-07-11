@@ -28,7 +28,9 @@ public class Worker : BackgroundService
             _logger.LogWarning("Topic: {Topic} was not found", topic);
         }
         else _subscriber.Subscribe(topic, _newMapEntityCommand.NotifyClientsNewMapEntity);
-        
+
+        _logger.LogWarning("Topic: {Topic} was found", topic);
+
         return Task.CompletedTask;
     }
 }

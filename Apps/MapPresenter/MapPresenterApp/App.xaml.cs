@@ -19,7 +19,13 @@ public partial class App : Application
 
         var settings = config.Get<Settings>();
 
-        _host = Host.CreateDefaultBuilder().UseSerilog()
+        _host = Host.CreateDefaultBuilder()
+            .UseSerilog((hostingContext, loggerConfiguration) =>
+            {
+                loggerConfiguration
+                    .ReadFrom.Configuration(hostingContext.Configuration)
+                    .Enrich.FromLogContext();
+            })
             .ConfigureServices((_, services) =>
             {
                 services.AddMapPresenterInfrastructureLayers(settings);
@@ -30,10 +36,10 @@ public partial class App : Application
     protected override async void OnStartup(StartupEventArgs e)
     {
         await _host.StartAsync();
-       
+
         var mainWindow = _host.Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
-        
+
         base.OnStartup(e);
     }
     protected override async void OnExit(ExitEventArgs e)
