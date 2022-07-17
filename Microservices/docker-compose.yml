@@ -48,7 +48,32 @@ services:
       - C:\Docker\Data\Seq:/data 
     networks:
       - main   
-    
+   
+  minIoService:
+    image: minio/minio
+    container_name: "minIo"
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - C:\Docker\Data\minIo:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - main
+     
+
+  maprepositoryservice:
+    image: ${DOCKER_REGISTRY-}maprepositoryservice
+    build:
+      context: .
+      dockerfile: MapRepositoryService/Dockerfile
+    container_name: "MapRepositoryService"
+    ports:
+      - 50004:80
+    networks:
+      - main
+
 networks:
   main:
     name: entities-networks
+

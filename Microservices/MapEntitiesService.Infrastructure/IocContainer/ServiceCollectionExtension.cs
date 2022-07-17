@@ -25,5 +25,6 @@ public static class ServiceCollectionExtension
         services.AddScoped<IMapEntityValidator, MapEntityValidation>();
         services.AddScoped<IMapEntityTitleValidator, MapEntityTitleValidator>();
         services.AddScoped<ICoordinateValidator, CoordinateValidtor>();
+
     }
 }

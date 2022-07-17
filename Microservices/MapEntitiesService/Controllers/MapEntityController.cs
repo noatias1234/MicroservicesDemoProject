@@ -6,7 +6,7 @@ namespace MapEntitiesService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class MapEntityController : ControllerBase
+public class MapEntityController : ControllerBase
 {
     private readonly IMapEntityService _mapEntityService;
 
@@ -14,7 +14,7 @@ public partial class MapEntityController : ControllerBase
     {
         _mapEntityService = mapEntityService;
     }
-
+        
     [HttpPost]
-    public ResultModel Post([FromForm] MapEntityDto mapEntityDto) => _mapEntityService.HandleNewMapEntity(mapEntityDto);
+    public ResultModel Post([FromBody] MapEntityDto mapEntityDto) => _mapEntityService.HandleNewMapEntity(mapEntityDto);
 }

@@ -37,7 +37,6 @@ public class MapEntityService : IMapEntityService
         }
 
         var messageJson = JsonSerializer.Serialize(mapEntityDto); // Convert to Json
-        // var fromJson = JsonSerializer.Deserialize<MapEntityDto>(messageJson); Convert from json
        
         _publisher.Publish(_settings.MapEntityTopic, messageJson);  
         
