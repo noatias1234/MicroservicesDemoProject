@@ -1,13 +1,15 @@
-﻿namespace MapRepositoryService.Core.Services.Interface
+﻿using MapRepositoryService.Core.Model;
+
+namespace MapRepositoryService.Core.Services.Interface
 {
     public interface IMapRepositoryService
     {
-        void DeleteMapByMapName(Stream fileName);
+        void DeleteMapByMapName(string mapName);
 
         List<string> GetAllMaps();
 
-        Stream GetMapByName(Stream mapName);
+        Stream? GetMapByName(string mapName);
 
-        
+        ResultModel HandleMapRepository(MapModelDto mapDto);
     }
 }

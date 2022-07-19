@@ -3,7 +3,7 @@ using MapEntitiesService.Core.Validation.Validator.Interfaces;
 
 namespace MapEntitiesService.Core.Validation.Validator;
 
-public class CoordinateValidtor : ICoordinateValidator
+public class CoordinateValidator : ICoordinateValidator
 {
     public ResultModel Validate(MapEntityDto mapEntityDto)
     {

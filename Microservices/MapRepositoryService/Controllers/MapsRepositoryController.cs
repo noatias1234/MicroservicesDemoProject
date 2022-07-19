@@ -2,7 +2,7 @@
 using MapRepositoryService.Core.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MapRepositoryService.Controller
+namespace MapRepositoryService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,16 +21,32 @@ namespace MapRepositoryService.Controller
             return _mapRepositoryService.GetAllMaps();
         }
 
-        [HttpGet ("{mapName}")]
-        public Stream GetMapByName(Stream mapName)
+        [HttpGet("{mapName}")]
+        public Stream? GetMapByName(string mapName)
         {
             return _mapRepositoryService.GetMapByName(mapName);
         }
-      
+
         [HttpDelete]
-        public void DeleteMap(Stream mapName)
+        public void DeleteMap(string mapName)
         {
             _mapRepositoryService.DeleteMapByMapName(mapName);
+        }
+
+        [HttpPost]
+        public ResultModel PostMap([FromForm] UploadMapDto mapDto)
+        {
+            var memoryStream = new MemoryStream();
+            mapDto.MapFile?.CopyTo(memoryStream);
+
+            var mapModel = new MapModelDto()
+            {
+                MapName = mapDto.MapName,
+                MapFile = memoryStream,
+                Extension = Path.GetExtension(mapDto.MapFile?.FileName)
+            };
+            
+           return _mapRepositoryService.HandleMapRepository(mapModel);
         }
     }
 
@@ -40,7 +56,7 @@ namespace MapRepositoryService.Controller
     // 3. Delete map by name - selected
     // 4. Get map by name
 
-    //5. Mission map controller - 
-        // Set mission map
-        // Get mission map
+    // 5. Mission map controller - 
+    // Set mission map
+    // Get mission map
 }

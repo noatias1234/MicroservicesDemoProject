@@ -1,17 +1,33 @@
 using MapRepositoryService.Core.Configuration;
 using MapRepositoryService.Infrastructure.IocContainer;
+using MessageBroker.Core.Configuration;
+using MessageBroker.Infrastructure.IocContainer;
 using Minio;
 using Serilog;
 
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader().AllowAnyMethod();
+        });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var settings = builder.Configuration.GetSection(("Settings")).Get<Settings>();
+var msgBrokerSettings = builder.Configuration.GetSection(("MessageBroker")).Get<MessageBrokerSettings>();
+
 builder.Services.AddMapRepositoryServices(settings);
+builder.Services.AddRabbitMqInfrastructureLayer(msgBrokerSettings);
 
 #region Serlog
 
@@ -33,15 +49,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-#region minio
-
-MinioClient minioClient = new MinioClient()
-    .WithEndpoint("play.min.io")
-    .WithCredentials("Q3AM3UQ867SPQQA43P2F", "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
-    .WithSSL()
-    .Build();
-
-#endregion
 app.UseAuthorization();
 
 app.MapControllers();
