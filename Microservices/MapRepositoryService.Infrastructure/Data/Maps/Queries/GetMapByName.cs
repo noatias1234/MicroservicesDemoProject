@@ -1,7 +1,4 @@
-﻿using System.Reactive.Linq;
-using System.Text.Json;
-using MapRepositoryService.Core.Data.Maps.Queries.Interfaces;
-using MapRepositoryService.Core.Model;
+﻿using MapRepositoryService.Core.Data.Maps.Queries.Interfaces;
 using MapRepositoryService.Infrastructure.Minio;
 using Microsoft.Extensions.Logging;
 using Minio;
@@ -23,13 +20,14 @@ public class GetMapByName : IGetMapByName
         try
         {
             var memoryStream = new MemoryStream();
+            
             var args = new GetObjectArgs()
                 .WithBucket(bucketName)
                 .WithObject(mapName).WithCallbackStream(stream =>
                 {
                     stream.CopyTo(memoryStream);
                 });
-
+            
             await minio.GetObjectAsync(args);
            
             _logger.LogInformation("GetMapByName succeeded {memoryStream} ", memoryStream);
@@ -38,8 +36,8 @@ public class GetMapByName : IGetMapByName
         }
         catch (Exception)
         {
-            _logger.LogInformation("GetAllMaps failed");
-            throw new Exception("GetAllMaps failed");
+            _logger.LogInformation("GetMapByName failed");
+            throw new Exception("GetMapByName failed");
         }
     }
 }

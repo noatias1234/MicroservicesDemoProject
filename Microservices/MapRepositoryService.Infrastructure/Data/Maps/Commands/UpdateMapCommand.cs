@@ -1,5 +1,4 @@
-﻿using MapRepositoryService.Core.Configuration;
-using MapRepositoryService.Core.Data.Maps.Commands.Interfaces;
+﻿using MapRepositoryService.Core.Data.Maps.Commands.Interfaces;
 using MapRepositoryService.Core.Model;
 using MapRepositoryService.Infrastructure.Minio;
 using Microsoft.Extensions.Logging;
@@ -10,34 +9,34 @@ internal class UpdateMapCommand : IUpdateMapCommand
 {
     private readonly ILogger<DeleteMapCommand> _iLogger;
     private readonly IMinIoClientBuilder _minioClient;
-    private readonly Settings _settings;
 
     public UpdateMapCommand(ILogger<DeleteMapCommand> iLogger,
-        IMinIoClientBuilder minioClient, Settings settings)
+        IMinIoClientBuilder minioClient)
     {
         _iLogger = iLogger;
         _minioClient = minioClient;
-        _settings = settings;
     }
     public async Task Update(MapModelDto mapDto)
     {
         var minio = _minioClient.Build("maps");
         try
         {
-            var args = new PutObjectArgs()
+            if (mapDto.MapFile != null)
+            {
+                var args = new PutObjectArgs()
                     .WithBucket("maps")
                     .WithObject(mapDto.MapName)
                     .WithStreamData(mapDto.MapFile)
                     .WithObjectSize(mapDto.MapFile.Length)
                     .WithContentType("application/octet-stream");
                 await minio.PutObjectAsync(args);
-            
+            }
 
-            Console.WriteLine($"Uploaded object {mapDto.MapName} to maps bucket");
+            _iLogger.LogInformation("Uploaded object {MapName} to maps bucket",mapDto.MapName);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"[Bucket]  Exception: {e}");
+          _iLogger.LogWarning("[Bucket]  Exception: {e}", e);
         }
     }
 }

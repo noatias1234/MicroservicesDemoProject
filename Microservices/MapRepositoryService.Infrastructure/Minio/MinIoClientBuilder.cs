@@ -52,7 +52,7 @@ public class MinIoClientBuilder : IMinIoClientBuilder
             }
 
         }
-        catch (Exception x)
+        catch (Exception)
         {
             _logger.LogWarning("CreateMapBucket is failed");
             throw new Exception("CreateMapBucket is failed");
