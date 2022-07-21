@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MapRepositoryService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class MapsRepositoryController : ControllerBase
     {
         private readonly IMapRepositoryService _mapRepositoryService;
+        public record UploadMapDto(string MapName, IFormFile MapFile);
 
         public MapsRepositoryController(IMapRepositoryService mapRepositoryService)
         {
@@ -16,15 +17,15 @@ namespace MapRepositoryService.Controllers
         }
 
         [HttpGet]
-        public List<string> GetAllMaps()
+        public Task<List<string>> GetAllMaps()
         {
-            return _mapRepositoryService.GetAllMaps();
+             return _mapRepositoryService.GetAllMaps();
         }
 
         [HttpGet("{mapName}")]
-        public Stream? GetMapByName(string mapName)
+        public void GetMapByName(string mapName)
         {
-            return _mapRepositoryService.GetMapByName(mapName);
+             _mapRepositoryService.GetMapByName(mapName);
         }
 
         [HttpDelete]
@@ -34,16 +35,13 @@ namespace MapRepositoryService.Controllers
         }
 
         [HttpPost]
-        public ResultModel PostMap([FromForm] UploadMapDto mapDto)
+        public ResultModel PostMapAsync([FromForm] UploadMapDto mapDto)
         {
-            var memoryStream = new MemoryStream();
-            mapDto.MapFile?.CopyTo(memoryStream);
-
-            var mapModel = new MapModelDto()
+            var mapModel = new MapModelDto
             {
                 MapName = mapDto.MapName,
-                MapFile = memoryStream,
-                Extension = Path.GetExtension(mapDto.MapFile?.FileName)
+                MapFile = mapDto.MapFile.OpenReadStream(),
+                Extension = Path.GetExtension(mapDto.MapFile.FileName)
             };
             
            return _mapRepositoryService.HandleMapRepository(mapModel);

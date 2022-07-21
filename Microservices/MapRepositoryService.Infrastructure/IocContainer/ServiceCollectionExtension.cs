@@ -1,13 +1,15 @@
 ﻿using MapRepositoryService.Core.Configuration;
+using MapRepositoryService.Core.Data.Maps.Commands.Interfaces;
+using MapRepositoryService.Core.Data.Maps.Queries.Interfaces;
 using MapRepositoryService.Core.Services.Interface;
 using MapRepositoryService.Core.Validation;
 using MapRepositoryService.Core.Validation.Interface;
 using MapRepositoryService.Core.Validation.Validators;
 using MapRepositoryService.Core.Validation.Validators.Interfaces;
+using MapRepositoryService.Infrastructure.Data.Maps.Commands;
+using MapRepositoryService.Infrastructure.Data.Maps.Queries;
+using MapRepositoryService.Infrastructure.Minio;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Minio;
-using Minio.AspNetCore;
 
 namespace MapRepositoryService.Infrastructure.IocContainer
 {
@@ -20,7 +22,13 @@ namespace MapRepositoryService.Infrastructure.IocContainer
             services.AddScoped<IMapNameValidator, MapNameValidator>();
             services.AddScoped<IMapTypeValidator, MapTypeValidator>();
             services.AddScoped<IUploadMapValidation, UploadMapValidation>();
-            services.AddScoped<IMapRepositoryService, Service.MapRepositoryService>();
+            services.AddScoped<IDeleteMapCommand, DeleteMapCommand>();
+            services.AddScoped<IUpdateMapCommand,UpdateMapCommand>();
+            services.AddScoped<IGetAllMapsQuery, GetAllMapsQuery>();
+            services.AddScoped<IGetMapByName, GetMapByName>();
+            services.AddScoped<IMinIoClientBuilder, MinIoClientBuilder>();
+            services.AddScoped<IMapRepositoryService, Core.Services.MapRepositoryService>();
+
         }
     }
 }

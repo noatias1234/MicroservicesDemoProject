@@ -4,10 +4,12 @@
     {
         public string HostName { get; set; } = "";
         public string MapRepositoryTopic { get; set; } = "";
-
-        public string EndPoint { get; set; } = ""; // URL to obj storage service
-        public string BucketName { get; set; } = "";
+        public string EndPoint { get; set; } = "";
+        public string AccessKey { get; set; } = "";
+        public string SecretKey { get; set; } = "";
         public string Location { get; set; } = "";
+
+        public string MapBucketName { get; set; } = "";
 
     }
 }

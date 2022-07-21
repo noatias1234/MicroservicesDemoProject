@@ -6,9 +6,9 @@ namespace MapRepositoryService.Core.Services.Interface
     {
         void DeleteMapByMapName(string mapName);
 
-        List<string> GetAllMaps();
+       Task<List<string>> GetAllMaps();
 
-        Stream? GetMapByName(string mapName);
+        void GetMapByName(string mapName);
 
         ResultModel HandleMapRepository(MapModelDto mapDto);
     }

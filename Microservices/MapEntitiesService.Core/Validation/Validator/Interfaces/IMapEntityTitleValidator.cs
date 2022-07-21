@@ -1,6 +1,6 @@
 ﻿using MapEntitiesService.Core.Model;
 
-namespace MapEntitiesService.Core.Validation.Interfaces;
+namespace MapEntitiesService.Core.Validation.Validator.Interfaces;
 
 public interface IMapEntityTitleValidator
 {

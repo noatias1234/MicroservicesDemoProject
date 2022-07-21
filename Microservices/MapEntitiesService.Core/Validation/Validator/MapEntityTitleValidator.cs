@@ -1,5 +1,6 @@
 ﻿using MapEntitiesService.Core.Model;
 using MapEntitiesService.Core.Validation.Interfaces;
+using MapEntitiesService.Core.Validation.Validator.Interfaces;
 
 namespace MapEntitiesService.Core.Validation.Validator;
 

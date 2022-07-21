@@ -6,7 +6,7 @@ public class MapTypeValidator : IMapTypeValidator
 {
     public ResultModel MapFileExtensionsValidate(string? extension)
     {
-        var supportedTypes = new[] { "png", "jpg", "svg" ,"jpeg"};
+        var supportedTypes = new[] { ".png", ".jpg", ".svg" ,".jpeg"};
 
         return supportedTypes.Contains(extension) 
             ? new ResultModel(true) 
