@@ -23,8 +23,8 @@ namespace MapRepositoryService.Infrastructure.IocContainer
             services.AddScoped<IMapTypeValidator, MapTypeValidator>();
             services.AddScoped<IUploadMapValidation, UploadMapValidation>();
             services.AddScoped<IDeleteMapCommand, DeleteMapCommand>();
-            services.AddScoped<IUpdateMapCommand,UpdateMapCommand>();
-            services.AddScoped<IGetAllMapsQuery, GetAllMapsQuery>();
+            services.AddScoped<ICreateMapCommand,CreateMapCommand>();
+            services.AddScoped<IGetAllMapsQuery, GetAllMapsNamesQuery>();
             services.AddScoped<IGetMapByName, GetMapByName>();
             services.AddScoped<IMinIoClientBuilder, MinIoClientBuilder>();
             services.AddScoped<IMapRepositoryService, Core.Services.MapRepositoryService>();

@@ -1,7 +1,7 @@
 ﻿using MapRepositoryService.Core.Model;
 
 namespace MapRepositoryService.Core.Data.Maps.Commands.Interfaces;
-public interface IUpdateMapCommand
+public interface ICreateMapCommand
 {
-    Task Update(MapModelDto mapDto);
+    Task Create(MapModelDto mapDto);
 }

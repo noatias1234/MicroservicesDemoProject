@@ -18,11 +18,11 @@ namespace MapRepositoryService.Core.Services
         private readonly IDeleteMapCommand _deleteMap;
         private readonly IGetAllMapsQuery _getAllMaps;
         private readonly IGetMapByName _getMapByName;
-        private readonly IUpdateMapCommand _updateMap;
+        private readonly ICreateMapCommand _createMap;
 
         public MapRepositoryService(ILogger<MapRepositoryService> logger, 
             Settings settings, IPublisher publisher, IUploadMapValidation mapValidation,
-            IDeleteMapCommand deleteMap, IGetAllMapsQuery getAllMaps, IGetMapByName getMapByName, IUpdateMapCommand updateMap)
+            IDeleteMapCommand deleteMap, IGetAllMapsQuery getAllMaps, IGetMapByName getMapByName, ICreateMapCommand createMap)
         {
             _logger = logger;
             _settings = settings;
@@ -31,7 +31,7 @@ namespace MapRepositoryService.Core.Services
             _deleteMap = deleteMap;
             _getAllMaps = getAllMaps;
             _getMapByName = getMapByName;
-            _updateMap = updateMap;
+            _createMap = createMap;
         }
 
         public void DeleteMapByMapName(string mapName)
@@ -56,7 +56,7 @@ namespace MapRepositoryService.Core.Services
             _publisher.Publish(_settings.MapRepositoryTopic, mapDto.ToString());
             if (_mapValidation.Validate(mapDto).Success)
             {
-                _updateMap.Update(mapDto);
+                _createMap.Create(mapDto);
             }
 
             return _mapValidation.Validate(mapDto) ;

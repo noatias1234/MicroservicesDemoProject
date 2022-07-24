@@ -5,20 +5,20 @@ using Microsoft.Extensions.Logging;
 using Minio;
 
 namespace MapRepositoryService.Infrastructure.Data.Maps.Commands;
-internal class UpdateMapCommand : IUpdateMapCommand
+internal class CreateMapCommand : ICreateMapCommand
 {
     private readonly ILogger<DeleteMapCommand> _iLogger;
-    private readonly IMinIoClientBuilder _minioClient;
+    private readonly MinioClient _minioClient;
 
-    public UpdateMapCommand(ILogger<DeleteMapCommand> iLogger,
-        IMinIoClientBuilder minioClient)
+    public CreateMapCommand(ILogger<DeleteMapCommand> iLogger,
+        IMinIoClientBuilder minIoClientBuilder)
     {
         _iLogger = iLogger;
-        _minioClient = minioClient;
+        _minioClient = minIoClientBuilder.Build("maps");
     }
-    public async Task Update(MapModelDto mapDto)
+
+    public async Task Create(MapModelDto mapDto)
     {
-        var minio = _minioClient.Build("maps");
         try
         {
             if (mapDto.MapFile != null)
@@ -29,7 +29,7 @@ internal class UpdateMapCommand : IUpdateMapCommand
                     .WithStreamData(mapDto.MapFile)
                     .WithObjectSize(mapDto.MapFile.Length)
                     .WithContentType("application/octet-stream");
-                await minio.PutObjectAsync(args);
+                await _minioClient.PutObjectAsync(args);
             }
 
             _iLogger.LogInformation("Uploaded object {MapName} to maps bucket",mapDto.MapName);
