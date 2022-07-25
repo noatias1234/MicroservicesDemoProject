@@ -1,5 +1,6 @@
 ﻿using MapRepositoryService.Core.Configuration;
-using MapRepositoryService.Core.Data.Maps.Queries.Interfaces;
+using MapRepositoryService.Core.Data.Maps.Interfaces.Queries;
+using MapRepositoryService.Core.Model;
 using MapRepositoryService.Infrastructure.Minio;
 using Microsoft.Extensions.Logging;
 using Minio;
@@ -8,38 +9,47 @@ namespace MapRepositoryService.Infrastructure.Data.Maps.Queries;
 public class GetMapByName : IGetMapByName
 {
     private readonly ILogger<GetMapByName> _logger;
-    private readonly Settings _settings;
     private readonly MinioClient _minioClient;
 
-    public GetMapByName(ILogger<GetMapByName> logger, Settings settings ,IMinIoClientBuilder minioClientBuilder)
+    public GetMapByName(ILogger<GetMapByName> logger, Settings settings, IMinIoClientBuilder minioClientBuilder)
     {
         _logger = logger;
-        _settings = settings;
-        _minioClient = minioClientBuilder.Build(_settings.MapBucketName);
+        _minioClient = minioClientBuilder.Build(settings.MapBucketName);
     }
-    public async Task<string> Get(string bucketName, string mapName)
+    public async Task<MapResultModel> Get(string bucketName, string mapName)
     {
+        MapResultModel result;
         try
         {
-            var memoryStream = new MemoryStream();
-            
+            var bytes = Array.Empty<byte>();
+
             var args = new GetObjectArgs()
                 .WithBucket(bucketName)
                 .WithObject(mapName).WithCallbackStream(stream =>
                 {
-                    stream.CopyTo(memoryStream);
+                    using var ms = new MemoryStream();
+                    stream.CopyTo(ms);
+                    bytes = ms.ToArray();
                 });
-            
-            await _minioClient.GetObjectAsync(args);
 
-            _logger.LogInformation("GetMapByName succeeded {memoryStream} ", memoryStream);
+            var stat = await _minioClient.GetObjectAsync(args);
+            var extension = Path.GetExtension(stat.ObjectName).Replace(".", string.Empty);
             
-            return Convert.ToBase64String(memoryStream.ToArray());
+            result = new MapResultModel()
+            {
+                MetaData = $"data:image/{extension};base64",
+                ImageBase64 = Convert.ToBase64String(bytes)
+            };
+
+            _logger.LogInformation("GetMapByName succeeded {result} ", result);
+
         }
         catch (Exception)
         {
             _logger.LogInformation("GetMapByName failed");
             throw new Exception("GetMapByName failed");
         }
+
+        return result;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MapRepositoryService.Core.Configuration;
-using MapRepositoryService.Core.Data.Maps.Commands.Interfaces;
-using MapRepositoryService.Core.Data.Maps.Queries.Interfaces;
+using MapRepositoryService.Core.Data.Maps.Interfaces.Commands;
+using MapRepositoryService.Core.Data.Maps.Interfaces.Queries;
 using MapRepositoryService.Core.Model;
 using MapRepositoryService.Core.Services.Interface;
 using MapRepositoryService.Core.Validation.Interface;
@@ -19,6 +19,7 @@ namespace MapRepositoryService.Core.Services
         private readonly IGetAllMapsQuery _getAllMaps;
         private readonly IGetMapByName _getMapByName;
         private readonly ICreateMapCommand _createMap;
+
 
         public MapRepositoryService(ILogger<MapRepositoryService> logger, 
             Settings settings, IPublisher publisher, IUploadMapValidation mapValidation,
@@ -50,16 +51,17 @@ namespace MapRepositoryService.Core.Services
              _getMapByName.Get(_settings.MapBucketName, mapName);
             
         }
-        public ResultModel HandleMapRepository(MapModelDto mapDto)
+
+        public ResultModel HandleMap(MapModelDto mapDto)
         {
             _logger.LogInformation("mapFile : {mapFile} , mapName: {mapName}", mapDto.MapFile, mapDto.MapName);
             _publisher.Publish(_settings.MapRepositoryTopic, mapDto.ToString());
+            
             if (_mapValidation.Validate(mapDto).Success)
-            {
                 _createMap.Create(mapDto);
-            }
 
-            return _mapValidation.Validate(mapDto) ;
+            return _mapValidation.Validate(mapDto);
         }
+   
     }
 }

@@ -6,10 +6,10 @@ namespace MapRepositoryService.Core.Services.Interface
     {
         void DeleteMapByMapName(string mapName);
 
-       Task<List<string>> GetAllMaps();
+        Task<List<string>> GetAllMaps();
 
         void GetMapByName(string mapName);
 
-        ResultModel HandleMapRepository(MapModelDto mapDto);
+        ResultModel HandleMap(MapModelDto mapDto);
     }
 }

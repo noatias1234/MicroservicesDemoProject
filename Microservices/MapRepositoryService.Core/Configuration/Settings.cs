@@ -7,9 +7,7 @@
         public string EndPoint { get; set; } = "";
         public string AccessKey { get; set; } = "";
         public string SecretKey { get; set; } = "";
-        public string Location { get; set; } = "";
-
         public string MapBucketName { get; set; } = "";
-
+        public string MissionMapBucketName { get; set; } = "";
     }
 }

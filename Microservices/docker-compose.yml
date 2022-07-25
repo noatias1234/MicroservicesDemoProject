@@ -59,8 +59,7 @@ services:
       - C:\Docker\Data\minIo:/data
     command: server /data --console-address ":9001"
     networks:
-      - main
-     
+      - main  
 
   maprepositoryservice:
     image: ${DOCKER_REGISTRY-}maprepositoryservice

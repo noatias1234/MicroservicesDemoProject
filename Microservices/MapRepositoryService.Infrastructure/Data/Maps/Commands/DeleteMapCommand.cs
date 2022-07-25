@@ -1,5 +1,5 @@
 ﻿using MapRepositoryService.Core.Configuration;
-using MapRepositoryService.Core.Data.Maps.Commands.Interfaces;
+using MapRepositoryService.Core.Data.Maps.Interfaces.Commands;
 using MapRepositoryService.Infrastructure.Minio;
 using Microsoft.Extensions.Logging;
 using Minio;

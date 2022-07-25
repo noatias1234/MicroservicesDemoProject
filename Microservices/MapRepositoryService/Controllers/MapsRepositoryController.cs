@@ -9,6 +9,7 @@ namespace MapRepositoryService.Controllers
     public class MapsRepositoryController : ControllerBase
     {
         private readonly IMapRepositoryService _mapRepositoryService;
+
         public record UploadMapDto(string MapName, IFormFile MapFile);
 
         public MapsRepositoryController(IMapRepositoryService mapRepositoryService)
@@ -16,16 +17,18 @@ namespace MapRepositoryService.Controllers
             _mapRepositoryService = mapRepositoryService;
         }
 
+        #region Maps
+
         [HttpGet]
-        public Task<List<string>> GetAllMaps()
-        {
-             return _mapRepositoryService.GetAllMaps();
+        public Task<List<string>> Get()
+        { 
+            return _mapRepositoryService.GetAllMaps();
         }
 
         [HttpGet("{mapName}")]
-        public void GetMapByName(string mapName)
+        public void Get(string mapName)
         {
-             _mapRepositoryService.GetMapByName(mapName);
+            _mapRepositoryService.GetMapByName(mapName);
         }
 
         [HttpDelete]
@@ -43,18 +46,10 @@ namespace MapRepositoryService.Controllers
                 MapFile = mapDto.MapFile.OpenReadStream(),
                 Extension = Path.GetExtension(mapDto.MapFile.FileName)
             };
-            
-           return _mapRepositoryService.HandleMapRepository(mapModel);
+
+            return _mapRepositoryService.HandleMap(mapModel);
         }
+        #endregion
+
     }
-
-
-    // 1. Get all maps - return list of strings
-    // 2. Upload new map ( need validations ) 
-    // 3. Delete map by name - selected
-    // 4. Get map by name
-
-    // 5. Mission map controller - 
-    // Set mission map
-    // Get mission map
 }
