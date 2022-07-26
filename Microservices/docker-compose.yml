@@ -72,7 +72,20 @@ services:
     networks:
       - main
 
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    container_name: "ApiGateway"
+    ports:
+        - 5000:80
+    networks:
+        - main
+
+
 networks:
   main:
     name: entities-networks
+
 

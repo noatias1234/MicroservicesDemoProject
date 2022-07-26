@@ -1,0 +1,77 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/MapEntity", //URL of the API Gateway that receives the requests and then redirects to the microservice API 
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/MapEntity", //endpoint at the microservice that is going to receive the request
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "mapentitiesservice",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/MapsRepository/{mapName}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/MapsRepository/{mapName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "maprepositoryservice",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/MapsRepository",
+      "UpstreamHttpMethod": [ "Post", "Get" ],
+      "DownstreamPathTemplate": "/MapsRepository",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "maprepositoryservice",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/MissionMap",
+      "UpstreamHttpMethod": [ "Post", "Get" ],
+      "DownstreamPathTemplate": "/MissionMap",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "maprepositoryservice",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/Seq",
+      "UpstreamHttpMethod": [ "Post" , "Get" , "Delete" ],
+      "DownstreamPathTemplate": "/Seq",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "seqLoggerService",
+          "Port": 5341
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/ws",
+      "UpstreamHttpMethod": [ "Post", "Get", "Delete" ],
+      "UpstreamPathTemplate": "/",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notificationsservice",
+          "Port": 80
+        }
+      ]
+    }
+
+  ]
+}

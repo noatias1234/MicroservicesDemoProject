@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(MyAllowSpecificOrigins,
         policy =>
         {
             policy.WithOrigins("http://localhost:4200")
@@ -23,7 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-#region Serlog
+#region Serilog
 
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)

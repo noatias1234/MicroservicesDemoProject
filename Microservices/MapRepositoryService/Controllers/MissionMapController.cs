@@ -3,7 +3,7 @@ using MapRepositoryService.Core.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MapRepositoryService.Controllers;
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class MissionMapController : ControllerBase
 {
@@ -15,14 +15,12 @@ public class MissionMapController : ControllerBase
     }
 
     [HttpGet]
-    [Route("MissionMap")]
     public Task<MapResultModel> GetMissionMapRequest()
     {
         return _missionMapService.GetMissionMap();
     }
 
     [HttpPost]
-    [Route("MissionMap")]
     public void SetMapMission([FromForm] string mapName)
     {
         _missionMapService.SetMissionMap(mapName);
