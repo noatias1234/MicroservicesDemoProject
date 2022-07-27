@@ -13,7 +13,7 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/api/MapsRepository/{mapName}",
+      "UpstreamPathTemplate": "/api/MapsRepository?mapName={mapName}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/MapsRepository/{mapName}",
       "DownstreamScheme": "http",
